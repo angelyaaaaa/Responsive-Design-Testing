@@ -1,7 +1,15 @@
 var defaultURL = 'localhost:3000'; //<---- CHANGE TO YOUR WEBSITE URL
 
 var scrollCoordinate = {
-    '1440': [4143, 732]
+    '640': [161, 140],
+    '720': [909, 140],
+    '750': [1606, 140],
+    '768': [2291, 140],
+    '1024': [683, 732],
+    '1080': [1708, 732],
+    '1250': [2832, 732],
+    '1440': [4147, 732],
+    '1680': [5607, 732]
 }
 
 
@@ -58,12 +66,6 @@ $(document).ready(function () {
             frameWidth += $(this).outerWidth() + 20;
         })
         $(this).css('width', frameWidth);
-
-        // $(this).css('width', function() {
-        //     let width = 0;
-        //     $('.row').each(function () { width += $(this).outerWidth() + 20 });
-        //     return width;
-        // })
     });
     
     //add event handlers for options radio buttons
@@ -93,6 +95,20 @@ $(document).ready(function () {
         });
     });
 
+    // change position to direct section
+    $('.moveTo').each(function(idx, element) {
+        $(element).click(function() {
+            var key = $(element).val();
+            window.scrollTo(scrollCoordinate[key][0], scrollCoordinate[key][1]);
+        })
+    })
+    
+    // .click(function() {
+    //     console.log('move ot to 1440')
+    //     var key = $(this).val();
+    //     window.scrollTo(scrollCoordinate[key][0], scrollCoordinate[key][1]);
+    // })
+
     //when the url textbox is used
     $('form').submit(function () {
         loadPage('', $('#url input[type=text]').val());
@@ -101,13 +117,15 @@ $(document).ready(function () {
 
     //add short cut to focus on the form
     document.addEventListener('keydown', function (e) {
-        if (e.keyCode === 47) { // '/'
-            $('#urlInput').focus();
-            return false;
-        }
-
         if (e.keyCode === 82 && e.ctrlKey) { // ctrl + r
             loadPage('', $('#url input[type=text]').val());
+            return false;
+        }
+    });
+
+    document.addEventListener('keypress', function (e) {
+        if (e.keyCode === 47) { // '/'
+            $('#urlInput').focus();
             return false;
         }
     });
